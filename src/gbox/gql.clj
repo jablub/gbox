@@ -15,36 +15,32 @@
       (select-keys [:name :path_lower])
       (clojure.set/rename-keys {:path_lower :path})))
 
-(defn resolve-file [dropbox]
-  (fn [context args value]
-    (map dropbox->gbox (value "file"))
-    ))
+(defn resolve-file [context args value]
+    (map dropbox->gbox (value "file")))
 
-(defn resolve-folder [dropbox]
-  (fn [context args value]
-    (map dropbox->gbox (value "folder"))
-    ))
+(defn resolve-folder [context args value]
+    (map dropbox->gbox (value "folder")))
 
 (defn resolve-ls [dropbox]
   (fn [context args value]
-    (->> (dbx/ls dropbox (:path args))
-         :entries
-         (group-by :.tag))
-    ))
+    (let [path (if (= "/" (:path args)) "" (:path args) )]
+      (->> (dbx/ls dropbox path)
+           :entries
+           (group-by :.tag)))))
 
 (defn gbox-schema [dropbox]
   (-> "gbox-schema.edn"
       slurp
       edn/read-string
       (util/attach-resolvers {:resolve-ls (resolve-ls dropbox)
-                              :resolve-file (resolve-file dropbox)
-                              :resolve-folder (resolve-folder dropbox)})
+                              :resolve-file resolve-file
+                              :resolve-folder resolve-folder})
       schema/compile))
 
 (defmethod ig/init-key :handler/gql [_ opts]
   {:schema (gbox-schema (:dropbox opts))}
   )
 
-(defmethod ig/halt-key! :hanler/gql [_ _]
-  )
+;(defmethod ig/halt-key! :hanler/gql [_ _]
+;  )
 

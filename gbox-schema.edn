@@ -4,7 +4,11 @@
 
   :folder
   {:fields {:path {:type String}
-            :name {:type String}}}}
+            :name {:type String}
+            :files {:type (list :file)
+                    :resolve :resolve-file}
+            :folders {:type (list :folder)
+                      :resolve :resolve-folder}}}}
 
  :queries
  {:ls

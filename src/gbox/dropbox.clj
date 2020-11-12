@@ -25,5 +25,5 @@
 (defmethod ig/init-key :client/dropbox [_ opts]
   (assoc opts :dropbox-access-token (env :dropbox-access-token)))
 
-(defmethod ig/halt-key! :client/dropbox [_ _])
+;(defmethod ig/halt-key! :client/dropbox [_ _])
 
