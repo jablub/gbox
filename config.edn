@@ -1,0 +1,4 @@
+{:server/pedestal {:port 8080 :gql #ig/ref :handler/gql}
+ :handler/gql {:schema "dropbox-gql-schema.edn" :dropbox #ig/ref :client/dropbox}
+ :client/dropbox {:api-root "https://api.dropboxapi.com/2/"}
+ }

@@ -1,0 +1,13 @@
+{:objects
+ {:file
+  {:fields {:name {:type String}}}
+
+  :folder
+  {:fields {:path {:type String}
+            :name {:type String}}}}
+
+ :queries
+ {:ls
+  {:type :folder
+   :args {:path {:type String}}
+   :resolve :resolve-ls}}}
