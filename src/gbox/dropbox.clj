@@ -20,10 +20,14 @@
       (json/decode body keyword))))
 
 (defn ls [dropbox path]
-  (req dropbox "files/list_folder" {:path path :recursive false}))
+  (let [rnf (fn [m] (clojure.set/rename-keys m {"folder" :folders
+                                                "file" :files}))]
+    (->> (req dropbox "files/list_folder" {:path path :recursive false})
+         :entries
+         (group-by :.tag)
+         rnf)))
 
 (defmethod ig/init-key :client/dropbox [_ opts]
   (assoc opts :dropbox-access-token (env :dropbox-access-token)))
 
-;(defmethod ig/halt-key! :client/dropbox [_ _])
 

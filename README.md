@@ -36,9 +36,48 @@ Run graphql query
 }
 ```
 
+Contents of folders can be nested. NOTE This is currently extremley inefficient. See todo.
+
+
+```
+{
+  ls(path: "/") {
+    folders {
+      name
+      path
+      files {
+        name
+      }
+      folders {
+        name
+        path
+        files {
+          name
+        }
+        folders {
+          name
+          path
+          files {
+            name
+          }
+          folders {
+            name
+            path
+          }
+        }
+      }
+    }
+    files {
+      name
+    }
+  }
+}
+```
+
 ## TODO
-- Recurring queries not yet supported in `folders`
-- Display contents fo a file
+- Rewrite to fetch entire dropbox directory recursively
+- Validate the ls args - needs to start with `/`
+- Display contents of a file
 - Tree
 - Subscritions to update result on changes
 
