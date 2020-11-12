@@ -14,12 +14,15 @@ The access token needs to be added to profiles.clj
 ## Running
  
 lein repl
+
 gbox.system=> (go)   : To start the server 
+
 gbox.system=> (halt) : To stop the server 
 
 open browser and go to http://localhost:8888/ide
 
 Run graphql query
+```
 {
   ls(path: "/") {
     folders {
@@ -31,6 +34,7 @@ Run graphql query
     }
   }
 }
+```
 
 ## TODO
 - Recurring queries not yet supported in `folders`
