@@ -1,6 +1,7 @@
 {:objects
  {:file
-  {:fields {:name {:type String}}}
+  {:fields {:name {:type String}
+            :link {:type String}}}
 
   :folder
   {:fields {:path {:type String}
@@ -14,4 +15,17 @@
  {:ls
   {:type :folder
    :args {:path {:type String}}
-   :resolve :resolve-ls}}}
+   :resolve :resolve-ls}}
+
+ :mutations
+ {:mkdir
+  {:type :folder
+   :args {:path {:type (non-null String)}}
+   :resolve :resolve-mkdir}}
+
+ :subscriptions
+ {:lastmodified
+  {:type String
+   :stream :stream-last-modified}}
+
+ }
